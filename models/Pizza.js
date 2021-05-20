@@ -14,7 +14,7 @@ const PizzaSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    size_suggestion: {
+    size: {
         type: String,
         default: 'Large'
     },

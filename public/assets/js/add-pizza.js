@@ -51,6 +51,22 @@ const handlePizzaSubmit = event => {
     }
 
     const formData = { pizzaName, createdBy, size, toppings };
+
+    //POST form data to the api
+    fetch('/api/pizzas', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(response => response.json())
+        .then(postResponse => {
+            alert('Pizza created successfully!');
+            console.log(postResponse);
+        })
+        .catch(e => console.log(e));
 };
 
 $pizzaForm.addEventListener('submit', handlePizzaSubmit);
