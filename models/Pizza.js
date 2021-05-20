@@ -1,7 +1,7 @@
 //only need Schema constructor & model function
 const { Schema, model } = require('mongoose');
 
-//expects: {pizzaName: 'Triple Threat', createdBy: "<username>", size_suggestion: 'Medium', toppings: <select from list>}
+//expects: {pizzaName: 'Triple Threat', createdBy: "<username>", size: 'Medium', toppings: <select from list>}
 
 const PizzaSchema = new Schema({
     pizzaName: {
@@ -18,7 +18,26 @@ const PizzaSchema = new Schema({
         type: String,
         default: 'Large'
     },
-    toppings: []
+    toppings: [],
+    comments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Comment'
+        }
+    ]
+},
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        //id is a virtual that Mongoose auto returns & I don't need it
+        id: false
+    }
+);
+
+//get total count of comments and replies on retrieval
+PizzaSchema.virtual('commentCount').get(function () {
+    return this.comments.length;
 });
 
 //create the Pizza model
